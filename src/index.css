@@ -1,0 +1,331 @@
+/* Space Theme Global Colors */
+:root {
+  --space-bg: #0B0E25;
+  --star-color: rgba(255, 255, 255, 0.8);
+  --primary: #3b82f6;
+  /* Bright Blue */
+  --accent-glow: rgba(59, 130, 246, 0.5);
+  --glass-panel: rgba(255, 255, 255, 0.05);
+  --text-white: #ffffff;
+  --text-muted: #94a3b8;
+  --transition: 0.4s ease;
+}
+
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--space-bg);
+  color: var(--text-white);
+  overflow-x: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Animated Space Background */
+.app-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  /* User requested space from edges */
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+}
+
+.stars {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  z-index: 0;
+}
+
+/* Layer 1: Small twinkling stars */
+.stars::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, white, transparent),
+    radial-gradient(3px 3px at 60px 70px, #fff, transparent),
+    radial-gradient(2px 2px at 50px 160px, white, transparent),
+    radial-gradient(3px 3px at 90px 40px, #fff, transparent),
+    radial-gradient(2px 2px at 130px 80px, white, transparent),
+    radial-gradient(4px 4px at 160px 120px, #fff, transparent),
+    radial-gradient(3px 3px at 180px 50px, #fff, transparent),
+    radial-gradient(2px 2px at 100px 140px, white, transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: twinkle 3s ease-in-out infinite;
+}
+
+/* Layer 2: Moving stars with different twinkle timing */
+.stars::after {
+  content: "";
+  position: absolute;
+  top: -10rem;
+  left: -10rem;
+  width: calc(100% + 20rem);
+  height: calc(100% + 20rem);
+  background-image:
+    radial-gradient(3px 3px at 20px 30px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(4px 4px at 40px 70px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 50px 160px, #eee, rgba(0, 0, 0, 0)),
+    radial-gradient(3px 3px at 90px 40px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 130px 80px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(4px 4px at 170px 100px, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(3px 3px at 110px 180px, #fff, rgba(0, 0, 0, 0));
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: moveStars 100s linear infinite, twinkle 4s ease-in-out infinite;
+}
+
+/* Twinkling animation */
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.7;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes moveStars {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(-1000px);
+  }
+}
+
+/* Split Card Implementation */
+.split-card-wrapper {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 1000px;
+  height: 600px;
+  background: rgba(30, 58, 138, 0.3);
+  /* Lighter blue transparent */
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  display: flex;
+  overflow: hidden;
+  animation: floatCard 6s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Left Side - Hero Image */
+.hero-panel {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.split-card-wrapper:hover .hero-image {
+  transform: scale(1.05);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(11, 14, 37, 0.8), transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+}
+
+.hero-text h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero-text p {
+  color: #e2e8f0;
+  font-size: 0.95rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+/* Right Side - Login Form */
+.form-panel {
+  flex: 1;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.brand {
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+.logo-text {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.brand h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.subtext {
+  color: var(--text-muted);
+}
+
+/* Role Tabs (Pill Style) */
+.role-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.3rem;
+  border-radius: 12px;
+}
+
+.role-tab {
+  flex: 1;
+  padding: 0.6rem;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.role-tab.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 0 15px var(--accent-glow);
+}
+
+/* Inputs */
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.input-field {
+  width: 100%;
+  padding: 0.875rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--accent-glow);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Buttons and Links */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.forgot-link {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.submit-btn {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Footer */
+.footer-text {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.footer-text a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+}
