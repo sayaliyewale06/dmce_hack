@@ -1,0 +1,405 @@
+/* CommunityHome.css */
+.community-dashboard-container {
+    width: 100%;
+    min-height: calc(100vh - 80px);
+    /* Adjust for header if needed */
+    background: radial-gradient(circle at 60% 20%, #1e293b 0%, #0f172a 40%, #020617 100%);
+    color: #e2e8f0;
+    font-family: 'Inter', sans-serif;
+    padding: 2rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Background Particles Effect (Simplified CSS) */
+.community-dashboard-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(#ffffff 1px, transparent 1px),
+        radial-gradient(#ffffff 1px, transparent 1px);
+    background-size: 50px 50px, 70px 70px;
+    background-position: 0 0, 25px 25px;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* 3-Column Grid Layout */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr 350px;
+    /* Fixed sidebars, flex middle */
+    gap: 1.5rem;
+    position: relative;
+    z-index: 10;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+/* Common Card Styles */
+.dashboard-card {
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* --- Left Column: Quick Report --- */
+.quick-report-panel {
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.6) 0%, rgba(20, 10, 10, 0.7) 100%);
+}
+
+.report-header-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+    animation: pulse-glow 3s infinite;
+}
+
+@keyframes pulse-glow {
+    0% {
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(239, 68, 68, 0.6);
+    }
+
+    100% {
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+    }
+}
+
+.quick-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.q-input {
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: white;
+    padding: 0.8rem;
+    border-radius: 6px;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+.q-input::placeholder {
+    color: #64748b;
+}
+
+.q-input:focus {
+    border-color: #3b82f6;
+}
+
+/* Severity Toggles */
+.severity-row {
+    display: flex;
+    gap: 4px;
+    background: rgba(15, 23, 42, 0.8);
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.sev-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.sev-btn.active.low {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+}
+
+.sev-btn.active.med {
+    background: rgba(251, 191, 36, 0.2);
+    color: #f59e0b;
+}
+
+.sev-btn.active.high {
+    background: rgba(249, 115, 22, 0.2);
+    color: #f97316;
+}
+
+.sev-btn.active.crit {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+.submit-quick-btn {
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 0.8rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.submit-quick-btn:hover {
+    background: #1d4ed8;
+}
+
+/* --- My Reports --- */
+.report-item {
+    background: rgba(255, 255, 255, 0.03);
+    padding: 0.8rem;
+    border-radius: 8px;
+    border-left: 3px solid #64748b;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.report-item.submitted {
+    border-color: #f59e0b;
+}
+
+.report-item.review {
+    border-color: #3b82f6;
+}
+
+.report-item.help {
+    border-color: #10b981;
+    border-left-width: 4px;
+    box-shadow: -4px 0 10px rgba(16, 185, 129, 0.1);
+}
+
+.report-item.resolved {
+    border-color: #64748b;
+    opacity: 0.7;
+}
+
+.status-badge {
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.help {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+    animation: pulse-text 2s infinite;
+}
+
+@keyframes pulse-text {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+}
+
+/* --- Middle Column: Alerts Feed --- */
+.alerts-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-right: 5px;
+    /* space for scrollbar */
+}
+
+/* Scrollbar styling */
+.alerts-feed::-webkit-scrollbar {
+    width: 6px;
+}
+
+.alerts-feed::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 3px;
+}
+
+.alert-card {
+    background: rgba(30, 41, 59, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    border-left: 4px solid #64748b;
+    animation: slide-in 0.4s ease-out;
+}
+
+.alert-card.critical {
+    border-left-color: #ef4444;
+    background: linear-gradient(90deg, rgba(239, 68, 68, 0.05), transparent);
+}
+
+.alert-card.high {
+    border-left-color: #f97316;
+}
+
+.alert-card.safe {
+    border-left-color: #10b981;
+}
+
+.alert-card.info {
+    border-left-color: #3b82f6;
+}
+
+.alert-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.alert-title {
+    font-weight: 700;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.alert-meta {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    display: flex;
+    gap: 0.8rem;
+}
+
+/* --- Right Column: Map & Profile --- */
+.crisis-map-widget {
+    height: 350px;
+    background: #0f172a;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    /* Reusing isometric grid from report page via similar styling */
+    background:
+        linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+    transform: perspective(500px) rotateX(40deg);
+    margin-top: -50px;
+    opacity: 0.5;
+}
+
+.map-pin-static {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    box-shadow: 0 0 10px currentColor;
+}
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.p-stat {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.8rem;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.p-val {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.p-lbl {
+    font-size: 0.7rem;
+    color: #94a3b8;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+    .dashboard-grid {
+        grid-template-columns: 300px 1fr;
+        /* 2 cols */
+    }
+
+    .right-col {
+        display: none;
+        /* Hide right col or move it, creating specific rule later */
+    }
+}
+
+@media (max-width: 900px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        /* Stack everything */
+    }
+
+    .alerts-feed {
+        height: 500px;
+        /* Fixed height for mobile scroll */
+    }
+}

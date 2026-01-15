@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Search, Filter, MapPin, Clock, AlertTriangle, Shield, Zap, Flame, User, Camera, CheckCircle, Activity, Box } from 'lucide-react';
 import '../../styles/dashboard.css';
 import './incident.css';
 
 const IncidentReports = () => {
+    const navigate = useNavigate();
     const [view, setView] = useState('list'); // 'list' or 'report'
     const [selectedSeverity, setSelectedSeverity] = useState('low');
 
@@ -188,7 +190,7 @@ const IncidentReports = () => {
                         <p style={{ color: 'var(--text-secondary)' }}>Monitoring real-time crisis incidents and response status.</p>
                     </div>
                     <button
-                        onClick={() => setView('report')}
+                        onClick={() => navigate('/dashboard/community/report')}
                         style={{
                             background: '#ef4444',
                             color: 'white',

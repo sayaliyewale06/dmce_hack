@@ -1,0 +1,695 @@
+/* Volunteer Dashboard - Tactical Space Ops Theme */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@500;600;700&display=swap');
+
+:root {
+    /* Tactical Palette */
+    --tac-dark: #050b14;
+    --tac-card: rgba(15, 23, 42, 0.85);
+    --tac-card-hover: rgba(30, 41, 59, 0.9);
+
+    /* Neon Accents - User Defined */
+    --tac-red: #dc2626;
+    /* Critical */
+    --tac-orange: #f59e0b;
+    /* Medium/Warning */
+    --tac-green: #10b981;
+    /* Success/Online */
+    --tac-cyan: #06b6d4;
+    /* Action/En Route */
+    --tac-gray: #64748b;
+    /* Low Priority */
+    --tac-purple: #8b5cf6;
+    /* Ops/Admin */
+
+    /* Glows */
+    --glow-red: 0 0 15px rgba(220, 38, 38, 0.4);
+    --glow-cyan: 0 0 15px rgba(6, 182, 212, 0.4);
+    --glow-green: 0 0 15px rgba(16, 185, 129, 0.4);
+
+    /* Layout */
+    --sidebar-width: 260px;
+    --header-height: 70px;
+}
+
+body {
+    background-color: var(--tac-dark);
+    color: #e2e8f0;
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+}
+
+/* Base Layout */
+.vol-container {
+    display: flex;
+    min-height: 100vh;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 40%);
+}
+
+/* Sidebar */
+.vol-sidebar {
+    width: var(--sidebar-width);
+    background: rgba(10, 14, 25, 0.95);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+}
+
+.vol-logo-box {
+    height: var(--header-height);
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    gap: 0.75rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.vol-logo-text {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 1.25rem;
+    background: linear-gradient(to right, #fff, var(--tac-cyan));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.vol-nav {
+    flex: 1;
+    padding: 1.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.vol-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    color: #94a3b8;
+    border-radius: 0.5rem;
+    transition: all 0.2s;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+}
+
+.vol-nav-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.vol-nav-item.active {
+    background: linear-gradient(90deg, rgba(6, 182, 212, 0.1), transparent);
+    color: var(--tac-cyan);
+    border-left-color: var(--tac-cyan);
+}
+
+.vol-back-btn {
+    margin: 0 1rem 1rem 1rem;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.5rem;
+    color: #94a3b8;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: 0.3s;
+    font-weight: 600;
+}
+
+.vol-back-btn:hover {
+    border-color: var(--tac-cyan);
+    color: var(--tac-cyan);
+}
+
+/* Sidebar Stats */
+.vol-sidebar-stats {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.vol-stat-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    color: #94a3b8;
+}
+
+.vol-stat-val {
+    color: #fff;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 700;
+}
+
+/* Main Content */
+.vol-main {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.vol-header {
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(5, 11, 20, 0.8);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+}
+
+.vol-page-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #cbd5e1;
+    border-left: 3px solid var(--tac-cyan);
+    padding-left: 1rem;
+    text-transform: uppercase;
+}
+
+.vol-header-right {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.sys-status {
+    text-align: right;
+}
+
+.sys-label {
+    font-size: 0.65rem;
+    color: #64748b;
+    display: block;
+    letter-spacing: 1px;
+}
+
+.sys-val {
+    color: var(--tac-green);
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 700;
+    text-shadow: var(--glow-green);
+}
+
+.vol-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    padding-left: 1.5rem;
+}
+
+.vol-avatar {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--tac-cyan), #3b82f6);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    clip-path: polygon(15% 0, 100% 0, 100% 85%, 85% 100%, 0 100%, 0 15%);
+}
+
+/* Dashboard Grid */
+.vol-dashboard-content {
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    /* 66% - 33% roughly */
+    gap: 2rem;
+}
+
+.vol-col-left {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.vol-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* Section Headers */
+.vol-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    color: #e2e8f0;
+    font-weight: 700;
+    letter-spacing: 1px;
+    font-size: 1.1rem;
+}
+
+.header-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--tac-green);
+    border-radius: 50%;
+    margin-left: 0.5rem;
+    display: inline-block;
+    box-shadow: var(--glow-green);
+}
+
+/* Alerts Section */
+.alerts-card {
+    background: var(--tac-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.alert-status-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.status-icon-box {
+    width: 32px;
+    height: 32px;
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--tac-green);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+}
+
+.status-text h3 {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.status-sub {
+    font-size: 0.75rem;
+    color: var(--tac-green);
+    opacity: 0.8;
+}
+
+.btn-offline {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #94a3b8;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-offline:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.action-btn-lg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    font-family: 'Rajdhani', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+}
+
+.btn-report {
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+}
+
+.btn-report:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(220, 38, 38, 0.4);
+}
+
+.btn-checkin {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.btn-accept-main {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+}
+
+/* Task Cards */
+.task-card {
+    background: var(--tac-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    position: relative;
+    transition: all 0.2s;
+}
+
+.task-card:hover {
+    transform: translateX(4px);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.task-card-high {
+    border-left: 4px solid var(--tac-red);
+    background: linear-gradient(90deg, rgba(220, 38, 38, 0.05) 0%, rgba(15, 23, 42, 0.9) 100%);
+}
+
+.task-card-high h3 {
+    text-shadow: 0 0 10px rgba(220, 38, 38, 0.3);
+}
+
+.task-card-med {
+    border-left: 4px solid var(--tac-orange);
+}
+
+.task-card-low {
+    border-left: 4px solid var(--tac-gray);
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.priority-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.prio-high {
+    color: var(--tac-red);
+}
+
+.prio-med {
+    color: var(--tac-orange);
+}
+
+.prio-low {
+    color: #94a3b8;
+}
+
+.eta-text {
+    color: #cbd5e1;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+}
+
+.task-title {
+    font-size: 1.35rem;
+    margin: 0 0 0.25rem 0;
+    color: #fff;
+}
+
+.task-desc {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin: 0 0 1rem 0;
+}
+
+.task-meta-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.meta-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+}
+
+.meta-icons {
+    display: flex;
+    gap: 0.75rem;
+    color: #64748b;
+}
+
+.btn-task-action {
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 700;
+    font-family: 'Rajdhani', sans-serif;
+    cursor: pointer;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    transition: 0.2s;
+}
+
+.btn-accept {
+    background: rgba(6, 182, 212, 0.15);
+    color: var(--tac-cyan);
+    border: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.btn-accept:hover {
+    background: var(--tac-cyan);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.4);
+}
+
+.btn-progress {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--tac-orange);
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* Radar Map Widget */
+.radar-widget-container {
+    height: 300px;
+    background: #000;
+    border-radius: 0.75rem;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.radar-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(transparent 30%, rgba(6, 182, 212, 0.15) 31%, transparent 32%),
+        radial-gradient(transparent 60%, rgba(6, 182, 212, 0.15) 61%, transparent 62%);
+    z-index: 1;
+}
+
+.radar-scan {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    transform-origin: top left;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.3) 0%, transparent 50%);
+    animation: radar-spin 4s infinite linear;
+    z-index: 2;
+}
+
+@keyframes radar-spin {
+    from {
+        transform: rotate(0deg) translate(-100%, -100%);
+    }
+
+    to {
+        transform: rotate(360deg) translate(-100%, -100%);
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+    animation: slideUp 0.4s ease-out forwards;
+}
+
+.map-point {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: var(--tac-orange);
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    z-index: 5;
+    animation: flash 2s infinite;
+}
+
+.user-point {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    background: var(--tac-cyan);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--tac-cyan);
+    z-index: 10;
+}
+
+.map-text-overlay {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 20;
+    font-size: 0.9rem;
+}
+
+/* Performance Widget */
+.perf-card {
+    background: var(--tac-card);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.perf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    margin-bottom: 1rem;
+}
+
+.perf-item label {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.perf-val {
+    font-size: 2rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.perf-trend {
+    font-size: 0.75rem;
+    color: var(--tac-green);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+}
+
+.glow-cyan {
+    color: var(--tac-cyan);
+    text-shadow: var(--glow-cyan);
+}
+
+.glow-white {
+    color: #fff;
+}
+
+.perf-details-row {
+    font-size: 0.85rem;
+    color: #cbd5e1;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Mobile Responsive */
+@media (max-width: 1024px) {
+    .vol-sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+
+    .vol-sidebar.open {
+        transform: translateX(0);
+    }
+
+    .vol-main {
+        margin-left: 0;
+    }
+
+    .vol-dashboard-content {
+        grid-template-columns: 1fr;
+    }
+}

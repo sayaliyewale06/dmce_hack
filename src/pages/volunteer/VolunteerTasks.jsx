@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Clock, ArrowRight, Shield, Zap, MessageSquare, Briefcase, Award, User, ChevronRight, Activity, TrendingUp, AlertTriangle } from 'lucide-react';
+import { Search, MapPin, Clock, ArrowRight, Shield, Zap, MessageSquare, Briefcase, Award, User, ChevronRight, Activity, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react';
 import '../../styles/dashboard.css';
 import './volunteer.css';
 import AcceptTask from './AcceptTask';

@@ -1,0 +1,393 @@
+/* Response Teams Specific Styles */
+
+/* Search Bar */
+.search-container {
+    position: relative;
+    margin-bottom: 2rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    background: rgba(19, 27, 44, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.75rem;
+    color: #fff;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    background: rgba(19, 27, 44, 0.9);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+}
+
+.filter-icon {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    cursor: pointer;
+}
+
+/* Category Pills */
+.filter-pills {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.pill-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 999px;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap;
+}
+
+.pill-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.pill-btn.active {
+    background: rgba(37, 99, 235, 0.2);
+    border-color: #3b82f6;
+    color: #fff;
+}
+
+.pill-count {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 0.1rem 0.5rem;
+    border-radius: 99px;
+    font-size: 0.75rem;
+}
+
+/* Featured Card (Alpha) */
+.featured-team-card {
+    background: linear-gradient(135deg, rgba(30, 58, 138, 0.4), rgba(11, 14, 37, 0.8));
+    border: 1px solid rgba(59, 130, 246, 0.5);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.2);
+    margin-bottom: 1.5rem;
+    transition: 0.3s;
+}
+
+.featured-team-card:hover {
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.team-identity {
+    display: flex;
+    gap: 1rem;
+}
+
+.team-icon-large {
+    width: 50px;
+    height: 50px;
+    background: rgba(37, 99, 235, 0.2);
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #60a5fa;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.team-details h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.team-subtitle {
+    color: #94a3b8;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.assign-btn {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: 0.3s;
+}
+
+.assign-btn:hover {
+    background: #1d4ed8;
+}
+
+.team-status-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.status-text {
+    color: #60a5fa;
+}
+
+.resources-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #e2e8f0;
+    font-size: 0.875rem;
+}
+
+.commander-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1rem;
+}
+
+.commander-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.commander-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.progress-container {
+    flex: 1;
+    max-width: 300px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.progress-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #3b82f6, #22d3ee);
+    border-radius: 99px;
+}
+
+/* Standard Team Card */
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.standard-card {
+    background: rgba(19, 27, 44, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    transition: 0.3s;
+}
+
+.standard-card.on-site {
+    border-color: rgba(74, 222, 128, 0.3);
+}
+
+.standard-card.deployed {
+    border-color: rgba(245, 158, 11, 0.3);
+}
+
+.card-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.badge-green {
+    background: rgba(74, 222, 128, 0.2);
+    color: #4ade80;
+}
+
+.badge-orange {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+/* Stats Panel */
+.stats-box {
+    background: rgba(19, 27, 44, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-highlight-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+}
+
+.stat-content h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.stat-sub {
+    font-size: 0.75rem;
+    color: #60a5fa;
+}
+
+.bg-purple-alpha {
+    background: rgba(147, 51, 234, 0.2);
+    color: #c084fc;
+}
+
+.bg-blue-alpha {
+    background: rgba(37, 99, 235, 0.2);
+    color: #60a5fa;
+}
+
+.bg-orange-alpha {
+    background: rgba(245, 158, 11, 0.2);
+    color: #fbbf24;
+}
+
+.bg-teal-alpha {
+    background: rgba(20, 184, 166, 0.2);
+    color: #2dd4bf;
+}
+
+.category-bar-row {
+    margin-bottom: 1rem;
+}
+
+.cat-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.cat-progress {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 99px;
+    overflow: hidden;
+}
+
+.cat-fill {
+    height: 100%;
+    border-radius: 99px;
+}
+
+.fill-blue {
+    background: #3b82f6;
+}
+
+.fill-orange {
+    background: #f59e0b;
+}
+
+.fill-red {
+    background: #ef4444;
+}
+
+.fill-green {
+    background: #10b981;
+}
+
+/* Deployments Overview */
+.deployments-overview {
+    background: rgba(11, 14, 37, 0.8);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+.overview-pills {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.overview-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}

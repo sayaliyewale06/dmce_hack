@@ -19,6 +19,10 @@ function Login() {
         e.preventDefault()
         if (role === 'community') {
             navigate('/dashboard/community');
+        } else if (role === 'agency') {
+            navigate('/dashboard/agency');
+        } else if (role === 'volunteer') {
+            navigate('/volunteer/dashboard');
         } else {
             // Fallback for demo
             navigate('/dashboard/community');
@@ -49,8 +53,9 @@ function Login() {
             if (role === 'community') {
                 navigate('/dashboard/community');
             } else if (role === 'agency') {
-                // Navigate to agency dashboard if implemented, else fallback
-                navigate('/dashboard/community');
+                navigate('/dashboard/agency');
+            } else if (role === 'volunteer') {
+                navigate('/volunteer/dashboard');
             } else {
                 navigate('/dashboard/community');
             }
@@ -187,7 +192,8 @@ function Login() {
                         className="google-btn"
                         style={{
                             width: '100%',
-                            padding: '12px',
+                            height: '52px',
+                            padding: '0 1rem',
                             background: 'rgba(255, 255, 255, 0.05)',
                             color: '#fff',
                             border: '1px solid rgba(255, 255, 255, 0.1)',

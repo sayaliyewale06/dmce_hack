@@ -4,11 +4,28 @@ import DashboardLayout from './components/layout/DashboardLayout';
 import CommunityHome from './pages/community/CommunityHome';
 import ResponseTeams from './pages/dashboard/ResponseTeams';
 import IncidentReports from './pages/dashboard/IncidentReports';
+import ReportIncident from './pages/community/ReportIncident';
 import VolunteerTasks from './pages/volunteer/VolunteerTasks';
 import AssignTask from './pages/dashboard/AssignTask';
 import ManageResources from './pages/dashboard/ManageResources';
 import ResourceTracking from './pages/dashboard/ResourceTracking';
 import SendAlerts from './pages/dashboard/SendAlerts';
+import AgencyLayout from './pages/agency/AgencyLayout';
+import AgencyHome from './pages/agency/AgencyHome';
+import AgencyTasks from './pages/agency/AgencyTasks';
+import AssignTaskAgency from './pages/agency/AssignTaskAgency';
+import IncidentReportsAgency from './pages/agency/IncidentReportsAgency';
+import ResponseTeamsAgency from './pages/agency/ResponseTeams'; // Renamed to avoid config with dashboard/ResponseTeams
+
+// Volunteer Components
+import VolunteerLayout from './pages/volunteer/VolunteerLayout';
+import VolunteerDashboard from './pages/volunteer/VolunteerDashboard';
+import UserProfile from './pages/UserProfile';
+import VolunteerMap from './pages/volunteer/VolunteerMap';
+import VolunteerResources from './pages/volunteer/VolunteerResources';
+import VolunteerNotifications from './pages/volunteer/VolunteerNotifications';
+import VolunteerAnalytics from './pages/volunteer/VolunteerAnalytics';
+
 import './index.css';
 
 function App() {
@@ -21,6 +38,7 @@ function App() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Navigate to="community" replace />} />
           <Route path="community" element={<CommunityHome />} />
+          <Route path="community/report" element={<ReportIncident />} />
           <Route path="teams" element={<ResponseTeams />} />
           <Route path="incidents" element={<IncidentReports />} />
           <Route path="volunteer" element={<VolunteerTasks />} />
@@ -28,6 +46,31 @@ function App() {
           <Route path="resources" element={<ManageResources />} />
           <Route path="tracking" element={<ResourceTracking />} />
           <Route path="alerts" element={<SendAlerts />} />
+          <Route path="analytics" element={<ManageResources />} /> {/* Temporary mapping based on layout */}
+          <Route path="profile" element={<UserProfile />} />
+        </Route>
+
+        {/* Agency Dashboard - Standalone Layout */}
+        <Route path="/dashboard/agency" element={<AgencyLayout />}>
+          <Route index element={<AgencyHome />} />
+          <Route path="tasks" element={<AgencyTasks />} />
+          <Route path="incident-reports" element={<IncidentReportsAgency />} />
+          <Route path="response-teams" element={<ResponseTeamsAgency />} />
+        </Route>
+
+        {/* Agency Assign Task - Standalone Layout */}
+        <Route path="/dashboard/agency/assign-task/:taskId" element={<AssignTaskAgency />} />
+
+        {/* Volunteer Dashboard Routes */}
+        <Route path="/volunteer" element={<VolunteerLayout />}>
+          <Route index element={<Navigate to="dashboard" replace />} />
+          <Route path="dashboard" element={<VolunteerDashboard />} />
+          <Route path="map" element={<VolunteerMap />} />
+          <Route path="tasks" element={<VolunteerTasks />} />
+          <Route path="resources" element={<VolunteerResources />} />
+          <Route path="notifications" element={<VolunteerNotifications />} />
+          <Route path="analytics" element={<VolunteerAnalytics />} />
+          <Route path="profile" element={<UserProfile />} />
         </Route>
 
         {/* Fallback */}
