@@ -4,6 +4,7 @@ import {
     Flame, Zap, Droplets, HeartPulse, ShieldAlert, CheckCircle,
     Clock, Navigation, Camera, Edit2, Phone
 } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import './CommunityHome.css';
 
@@ -53,7 +54,7 @@ const CommunityHome = () => {
                 location: reportForm.location || 'Current Loc'
             };
             setMyReports([newRep, ...myReports]);
-            alert("Report Submitted! Help is being coordinated.");
+            toast.success("Report Submitted! Help is being coordinated.");
             setReportForm({ ...reportForm, description: '', location: '' });
         }, 1500);
     };

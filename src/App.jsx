@@ -28,9 +28,12 @@ import VolunteerAnalytics from './pages/volunteer/VolunteerAnalytics';
 
 import './index.css';
 
+import { Toaster } from 'react-hot-toast';
+
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-center" reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Login />} />
 

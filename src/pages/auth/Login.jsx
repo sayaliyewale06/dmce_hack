@@ -116,7 +116,7 @@ function Login() {
                     <div className="brand">
                         <div className="logo-text">
                             <Shield size={24} />
-                            ResilienceNet
+                            Crisis Command
                         </div>
                         <h2>Welcome Back</h2>
                         <p className="subtext">Secure access for {role} members.</p>
