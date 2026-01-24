@@ -67,7 +67,7 @@ const DashboardLayout = () => {
             </aside>
 
             {/* Main Content */}
-            <main className="main-content" style={{ flex: 1, marginLeft: '260px', display: 'flex', flexDirection: 'column' }}>
+            <main className="main-content" style={{ flex: 1, marginLeft: '260px', display: 'flex', flexDirection: 'column', height: '100vh', overflowY: 'auto', overflowX: 'hidden' }}>
                 {/* Top Header */}
                 <header className="dashboard-header" style={{
                     height: '70px', display: 'flex', justifyContent: 'flex-end', alignItems: 'center',

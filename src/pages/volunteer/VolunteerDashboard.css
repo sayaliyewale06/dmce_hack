@@ -159,6 +159,9 @@ body {
     margin-left: var(--sidebar-width);
     display: flex;
     flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Header */
@@ -692,4 +695,27 @@ body {
     .vol-dashboard-content {
         grid-template-columns: 1fr;
     }
+}
+
+/* Map specific styles */
+.glowing-path {
+    filter: drop-shadow(0 0 8px rgba(0, 240, 255, 0.6));
+    animation: dash 2s linear infinite;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: -20;
+    }
+}
+
+.custom-popup .leaflet-popup-content-wrapper {
+    background: rgba(15, 23, 42, 0.9);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(4px);
+}
+
+.custom-popup .leaflet-popup-tip {
+    background: rgba(15, 23, 42, 0.9);
 }
