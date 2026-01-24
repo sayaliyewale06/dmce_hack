@@ -9,6 +9,8 @@ import VolunteerTasks from './pages/volunteer/VolunteerTasks';
 import AssignTask from './pages/dashboard/AssignTask';
 import ManageResources from './pages/dashboard/ManageResources';
 import ResourceTracking from './pages/dashboard/ResourceTracking';
+import Analytics from './pages/dashboard/Analytics';
+import CrisisMap from './pages/dashboard/CrisisMap';
 import SendAlerts from './pages/dashboard/SendAlerts';
 import AgencyLayout from './pages/agency/AgencyLayout';
 import AgencyHome from './pages/agency/AgencyHome';
@@ -25,6 +27,7 @@ import VolunteerMap from './pages/volunteer/VolunteerMap';
 import VolunteerResources from './pages/volunteer/VolunteerResources';
 import VolunteerNotifications from './pages/volunteer/VolunteerNotifications';
 import VolunteerAnalytics from './pages/volunteer/VolunteerAnalytics';
+import VolunteerProfile from './pages/volunteer/VolunteerProfile';
 
 import './index.css';
 
@@ -49,7 +52,8 @@ function App() {
           <Route path="resources" element={<ManageResources />} />
           <Route path="tracking" element={<ResourceTracking />} />
           <Route path="alerts" element={<SendAlerts />} />
-          <Route path="analytics" element={<ManageResources />} /> {/* Temporary mapping based on layout */}
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="map" element={<CrisisMap />} />
           <Route path="profile" element={<UserProfile />} />
         </Route>
 
@@ -73,7 +77,7 @@ function App() {
           <Route path="resources" element={<VolunteerResources />} />
           <Route path="notifications" element={<VolunteerNotifications />} />
           <Route path="analytics" element={<VolunteerAnalytics />} />
-          <Route path="profile" element={<UserProfile />} />
+          <Route path="profile" element={<VolunteerProfile />} />
         </Route>
 
         {/* Fallback */}
