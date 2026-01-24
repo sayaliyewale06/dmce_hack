@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* Space Theme Global Colors */
 :root {
   --space-bg: #0B0E25;
@@ -123,168 +125,180 @@ body {
   z-index: 10;
   width: 100%;
   max-width: 1000px;
-  width: 100%;
-  max-width: 1100px;
-  min-height: 650px;
-  background: rgba(30, 58, 138, 0.3);
-  /* Lighter blue transparent */
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  /* Screenshot looks slightly wider */
+  min-height: 600px;
+  background: #1e293b;
+  /* Dark slate background matching screenshot */
   border-radius: 24px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   display: flex;
   overflow: hidden;
-  animation: floatCard 6s ease-in-out infinite;
-}
-
-@keyframes floatCard {
-  0% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
+  /* Removed float animation for cleaner look matching static screenshot */
 }
 
 /* Left Side - Hero Image */
 .hero-panel {
-  flex: 4;
+  flex: 5;
+  /* Slightly wider left panel */
   position: relative;
   overflow: hidden;
-  transition: var(--transition);
+  background: #fff;
+  /* Fallback */
 }
 
 .hero-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s ease;
-}
-
-.split-card-wrapper:hover .hero-image {
-  transform: scale(1.05);
 }
 
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(11, 14, 37, 0.8), transparent 60%);
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 50%);
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 2rem;
+  padding: 2.5rem;
 }
 
 .hero-text h3 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  color: white;
 }
 
 .hero-text p {
-  color: #e2e8f0;
-  font-size: 0.95rem;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 /* Right Side - Login Form */
 .form-panel {
   flex: 6;
-  padding: 4rem;
+  padding: 3.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.02);
+  background: #111827;
+  /* Darker background for form side */
 }
 
 .brand {
   margin-bottom: 2rem;
-  text-align: left;
 }
 
 .logo-text {
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--primary);
+  font-size: 1rem;
+  font-weight: 600;
+  color: #60a5fa;
+  /* Light blue */
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .brand h2 {
-  font-size: 2.25rem;
+  font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
+  color: white;
+  letter-spacing: -0.5px;
 }
 
 .subtext {
-  color: var(--text-muted);
+  color: #94a3b8;
+  font-size: 1rem;
 }
 
 /* Role Tabs (Pill Style) */
 .role-tabs {
   display: flex;
-  gap: 0.5rem;
+  gap: 0;
+  /* Connected styling */
   margin-bottom: 2rem;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 0.3rem;
+  background: #1f2937;
+  padding: 4px;
   border-radius: 12px;
+  width: fit-content;
+  /* Don't stretch full width */
+}
+
+/* Wait, screenshot shows full width block of tabs? Or just pills? 
+Screenshot shows: [Community (Blue)] [Agency] [Volunteer] across top. 
+It looks like separate tabs or a segmented control. 
+Let's try segmented full width control based on screenshot width usage. */
+.role-tabs {
+  width: 100%;
+  justify-content: space-between;
+  background: transparent;
+  padding: 0;
+  gap: 1rem;
 }
 
 .role-tab {
   flex: 1;
-  padding: 0.6rem;
+  padding: 0.75rem;
   border: none;
-  background: transparent;
-  color: var(--text-muted);
-  font-weight: 500;
+  background: #1f2937;
+  color: #94a3b8;
+  font-weight: 600;
   cursor: pointer;
   border-radius: 8px;
-  transition: all 0.3s;
+  /* Slightly rounded */
+  transition: all 0.2s;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .role-tab.active {
-  background: var(--primary);
+  background: #3b82f6;
   color: white;
-  box-shadow: 0 0 15px var(--accent-glow);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
+
+/* Wait, the screenshot shows the ACTIVE tab is blue and FILLED. 
+Inactive tabs are transparent or dark gray background. */
 
 /* Inputs */
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
 }
 
 .form-group label {
   display: block;
-  font-size: 0.875rem;
-  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #cbd5e1;
   margin-bottom: 0.5rem;
 }
 
 .input-field {
   width: 100%;
   padding: 0 1rem;
-  height: 52px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  height: 48px;
+  background: #1f2937;
+  border: 1px solid #374151;
   border-radius: 8px;
   color: white;
-  font-size: 1rem;
-  transition: 0.3s;
+  font-size: 0.95rem;
+  transition: 0.2s;
 }
 
 .input-field:focus {
   outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 2px var(--accent-glow);
-  background: rgba(255, 255, 255, 0.1);
+  border-color: #3b82f6;
+  background: #1f2937;
+  /* Keep background dark */
+  box-shadow: 0 0 0 1px #3b82f6;
 }
 
 /* Buttons and Links */
