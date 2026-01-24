@@ -16,6 +16,10 @@ import AgencyTasks from './pages/agency/AgencyTasks';
 import AssignTaskAgency from './pages/agency/AssignTaskAgency';
 import IncidentReportsAgency from './pages/agency/IncidentReportsAgency';
 import ResponseTeamsAgency from './pages/agency/ResponseTeams'; // Renamed to avoid config with dashboard/ResponseTeams
+import AgencyResources from './pages/agency/AgencyResources';
+import AgencyAnalytics from './pages/agency/AgencyAnalytics';
+import AgencyAlerts from './pages/agency/AgencyAlerts';
+import AgencyStatus from './pages/agency/AgencyStatus';
 
 // Volunteer Components
 import VolunteerLayout from './pages/volunteer/VolunteerLayout';
@@ -57,8 +61,15 @@ function App() {
         <Route path="/dashboard/agency" element={<AgencyLayout />}>
           <Route index element={<AgencyHome />} />
           <Route path="tasks" element={<AgencyTasks />} />
+          <Route path="assign-task" element={<AgencyTasks />} />
+          <Route path="incidents" element={<IncidentReportsAgency />} />
           <Route path="incident-reports" element={<IncidentReportsAgency />} />
+          <Route path="map" element={<VolunteerMap />} />
+          <Route path="resources" element={<AgencyResources />} />
           <Route path="response-teams" element={<ResponseTeamsAgency />} />
+          <Route path="analytics" element={<AgencyAnalytics />} />
+          <Route path="alerts" element={<AgencyAlerts />} />
+          <Route path="status" element={<AgencyStatus />} />
         </Route>
 
         {/* Agency Assign Task - Standalone Layout */}

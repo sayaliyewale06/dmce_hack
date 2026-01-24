@@ -12,19 +12,21 @@ const AgencyLayout = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     const isActive = (path) => {
-        // Simple exact match or subpath match
-        return location.pathname === path || location.pathname.startsWith(path + '/');
+        if (path === '/dashboard/agency') {
+            return location.pathname === '/dashboard/agency';
+        }
+        return location.pathname.startsWith(path);
     };
 
     const navItems = [
-        { path: '/dashboard/agency/home', label: 'Dashboard', icon: LayoutDashboard },
+        { path: '/dashboard/agency', label: 'Dashboard', icon: LayoutDashboard },
         { path: '/dashboard/agency/map', label: 'Crisis Map', icon: Map },
-        { path: '/dashboard/agency/incidents', label: 'View Incidents', icon: FileText },
-        { path: '/dashboard/agency/assign', label: 'Assign Task', icon: CheckSquare },
-        { path: '/dashboard/agency/resources', label: 'Resources', icon: Box },
-        { path: '/dashboard/agency/status', label: 'Status', icon: Activity },
+        { path: '/dashboard/agency/incident-reports', label: 'View Incidents', icon: FileText },
+        { path: '/dashboard/agency/assign-task', label: 'Assign Task', icon: CheckSquare },
+        { path: '/dashboard/agency/resources', label: 'Resources', icon: Box, color: '#f43f5e' }, // Pink-500
+        { path: '/dashboard/agency/status', label: 'Status', icon: Activity, color: '#FF3250' },
         { path: '/dashboard/agency/analytics', label: 'Analytics', icon: BarChart2 },
-        { path: '/dashboard/agency/alerts', label: 'Alert', icon: Bell },
+        { path: '/dashboard/agency/alerts', label: 'Alert', icon: Bell, color: '#ef4444' },
     ];
 
     return (
@@ -45,19 +47,29 @@ const AgencyLayout = () => {
                 </div>
 
                 <nav className="nav-menu">
-                    {navItems.map((item) => (
-                        <div
-                            key={item.path}
-                            className={`nav-item cursor-pointer ${isActive(item.path) ? 'active' : ''}`}
-                            onClick={() => {
-                                navigate(item.path);
-                                setSidebarOpen(false);
-                            }}
-                        >
-                            <item.icon size={18} />
-                            {item.label}
-                        </div>
-                    ))}
+                    {navItems.map((item) => {
+                        const active = isActive(item.path);
+                        const activeStyle = active && item.color ? {
+                            color: item.color,
+                            borderLeftColor: item.color,
+                            background: `linear-gradient(90deg, ${item.color}1a, transparent)`
+                        } : {};
+
+                        return (
+                            <div
+                                key={item.path}
+                                className={`nav-item cursor-pointer ${active ? 'active' : ''}`}
+                                style={activeStyle}
+                                onClick={() => {
+                                    navigate(item.path);
+                                    setSidebarOpen(false);
+                                }}
+                            >
+                                <item.icon size={18} />
+                                {item.label}
+                            </div>
+                        );
+                    })}
                 </nav>
 
                 <button
