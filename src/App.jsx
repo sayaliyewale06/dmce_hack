@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/auth/Login';
 import DashboardLayout from './components/layout/DashboardLayout';
 import CommunityHome from './pages/community/CommunityHome';
+import CommunityMap from './pages/community/CommunityMap';
 import ResponseTeams from './pages/dashboard/ResponseTeams';
 import IncidentReports from './pages/dashboard/IncidentReports';
 import ReportIncident from './pages/community/ReportIncident';
@@ -22,6 +23,7 @@ import AgencyResources from './pages/agency/AgencyResources';
 import AgencyAnalytics from './pages/agency/AgencyAnalytics';
 import AgencyAlerts from './pages/agency/AgencyAlerts';
 import AgencyStatus from './pages/agency/AgencyStatus';
+import AgencyCrisisMap from './pages/agency/CrisisMap';
 
 // Volunteer Components
 import VolunteerLayout from './pages/volunteer/VolunteerLayout';
@@ -32,6 +34,7 @@ import VolunteerResources from './pages/volunteer/VolunteerResources';
 import VolunteerNotifications from './pages/volunteer/VolunteerNotifications';
 import VolunteerAnalytics from './pages/volunteer/VolunteerAnalytics';
 import VolunteerProfile from './pages/volunteer/VolunteerProfile';
+import VolunteerPerformance from './pages/volunteer/VolunteerPerformance';
 
 import './index.css';
 
@@ -49,6 +52,7 @@ function App() {
           <Route index element={<Navigate to="community" replace />} />
           <Route path="community" element={<CommunityHome />} />
           <Route path="community/report" element={<ReportIncident />} />
+          <Route path="community/map" element={<CommunityMap />} />
           <Route path="teams" element={<ResponseTeams />} />
           <Route path="incidents" element={<IncidentReports />} />
           <Route path="volunteer" element={<VolunteerTasks />} />
@@ -68,7 +72,7 @@ function App() {
           <Route path="assign-task" element={<AgencyTasks />} />
           <Route path="incidents" element={<IncidentReportsAgency />} />
           <Route path="incident-reports" element={<IncidentReportsAgency />} />
-          <Route path="map" element={<VolunteerMap />} />
+          <Route path="map" element={<AgencyCrisisMap />} />
           <Route path="resources" element={<AgencyResources />} />
           <Route path="response-teams" element={<ResponseTeamsAgency />} />
           <Route path="analytics" element={<AgencyAnalytics />} />
@@ -88,6 +92,7 @@ function App() {
           <Route path="resources" element={<VolunteerResources />} />
           <Route path="notifications" element={<VolunteerNotifications />} />
           <Route path="analytics" element={<VolunteerAnalytics />} />
+          <Route path="performance" element={<VolunteerPerformance />} />
           <Route path="profile" element={<VolunteerProfile />} />
         </Route>
 

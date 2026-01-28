@@ -368,105 +368,7 @@ select.futuristic-input option {
     border-radius: 8px;
 }
 
-/* Simulated Map Visuals */
-.iso-city-grid {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 250%;
-    /* Expanded grid */
-    height: 250%;
-    transform: translate(-50%, -50%) rotateX(60deg) rotateZ(45deg);
-    background-image:
-        linear-gradient(rgba(59, 130, 246, 0.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(59, 130, 246, 0.15) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    animation: grid-pulse 10s infinite alternate;
-}
-
-@keyframes grid-pulse {
-    0% {
-        opacity: 0.8;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-/* Markers */
-.map-marker {
-    position: absolute;
-    width: 30px;
-    /* Larger hit area */
-    height: 30px;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    z-index: 20;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.map-marker:hover {
-    transform: translate(-50%, -50%) scale(1.2);
-    z-index: 30;
-}
-
-.pin-core {
-    width: 14px;
-    height: 14px;
-    background: #60a5fa;
-    border-radius: 50%;
-    box-shadow: 0 0 15px #60a5fa, 0 0 30px #60a5fa;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: all 0.3s ease;
-    border: 2px solid #fff;
-}
-
-.pin-ripple {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 40px;
-    height: 40px;
-    border: 2px solid rgba(96, 165, 250, 0.6);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    animation: ripple 2s infinite;
-}
-
-.map-marker.active .pin-core {
-    background: #f472b6;
-    box-shadow: 0 0 20px #f472b6, 0 0 40px #f472b6;
-    border-color: #fff;
-    width: 18px;
-    height: 18px;
-}
-
-.map-marker.active .pin-ripple {
-    border-color: rgba(244, 114, 182, 0.6);
-    animation: ripple 1.5s infinite;
-}
-
-@keyframes ripple {
-    0% {
-        width: 0;
-        height: 0;
-        opacity: 1;
-        border-width: 3px;
-    }
-
-    100% {
-        width: 80px;
-        height: 80px;
-        opacity: 0;
-        border-width: 0px;
-    }
-}
-
+/* Map Overlay Text */
 .map-overlay-text {
     position: absolute;
     bottom: 20px;
@@ -483,6 +385,7 @@ select.futuristic-input option {
     padding: 10px;
     backdrop-filter: blur(4px);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
+    z-index: 1000;
 }
 
 /* Feature Cards (Full Width Row) */

@@ -42,9 +42,7 @@ body {
 .vol-container {
     display: flex;
     min-height: 100vh;
-    background-image:
-        radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.05) 0%, transparent 40%),
-        radial-gradient(circle at 90% 80%, rgba(220, 38, 38, 0.05) 0%, transparent 40%);
+    background: url(../../assets/bg-lightning.png) center/cover no-repeat fixed;
 }
 
 /* Sidebar */

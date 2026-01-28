@@ -1,210 +1,255 @@
 import React, { useState } from 'react';
 import {
     Flame, Truck, Activity, Clock, MapPin, Settings,
-    Bell, User, ChevronDown, Battery, Shield, AlertTriangle,
-    Database, Box
+    AlertTriangle, Box, Syringe, Map as MapIcon, Loader
 } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+import './VolunteerResources.css';
+
+// Fix for default Leaflet markers
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
+
+// Custom icons based on team type
+const getCustomIcon = (color) => {
+    return L.divIcon({
+        className: 'custom-map-marker',
+        html: `<div style="background-color: ${color}; width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 10px ${color}, 0 0 20px ${color}; border: 2px solid white;"></div>`,
+        iconSize: [20, 20],
+        iconAnchor: [10, 10]
+    });
+};
 
 const VolunteerResources = () => {
-    const [activeTab, setActiveTab] = useState('responders');
-    const [activeRespondersCount, setActiveRespondersCount] = useState(24);
+    const [activeTab, setActiveTab] = useState('RESPONDERS');
 
-    const responderTeams = [
+    // Mock Data based on Request
+    const teams = [
         {
             id: 1,
             name: "Rescue Team 3",
             icon: Flame,
+            priorityLabel: "Critical 3",
+            priorityColor: "#DC143C", // Red
             status: "RESPONDING",
-            statusColor: "text-orange-400 bg-orange-400/10 border-orange-400/20",
-            priority: "Critical 3",
-            time: "Active 40m",
-            location: "Sector 8",
-            distance: "0.4 km",
-            borderLeft: "border-l-4 border-l-red-500",
-            stats: [
-                { value: 71, color: "bg-green-500" },
-                { value: 69, color: "bg-orange-500" },
-                { value: 2, color: "bg-blue-500" }
+            statusBadgeColor: "#FF6B35", // Orange
+            stats: { time: "40m", sector: "Sector 8", dist: "0.4 km" },
+            coords: [51.505, -0.09], // Mock Coords
+            bars: [
+                { val: 71, color: "#10b981" }, // Green
+                { val: 69, color: "#f97316" }, // Orange
+                { val: 2, color: "#3b82f6" }   // Blue
             ]
         },
         {
             id: 2,
             name: "Hazmat Team 4",
-            icon: AlertTriangle, // Best match for Hazmat
+            icon: AlertTriangle,
+            priorityLabel: "RE ROUTE",
+            priorityColor: "#3b82f6", // Blue text per requirement? Or Re Route is usually blue/info 
             status: "HIGH LEVEL",
-            statusColor: "text-orange-400 bg-orange-400/10 border-orange-400/20",
-            subStatus: "EN ROUTE",
-            priority: "RE ROUTE", // Text from screenshot "RE DUTE" likely "RE ROUTE" or similar
-            time: "Active 1h",
-            location: "Sector 11",
-            distance: "0.2 km",
-            borderLeft: "border-l-4 border-l-orange-500",
-            stats: [
-                { value: 71, color: "bg-green-500" },
-                { value: 25, color: "bg-orange-500" },
-                { value: 4, color: "bg-blue-500" }
+            statusBadgeColor: "#eab308", // Yellow/Gold
+            borderColor: "#f97316", // Orange border
+            iconBg: "rgba(249, 115, 22, 0.1)",
+            iconColor: "#f97316",
+            coords: [51.51, -0.1], // Mock Coords
+            stats: { time: "1h", sector: "Sector 11", dist: "0.2 km" },
+            bars: [
+                { val: 71, color: "#10b981" },
+                { val: 25, color: "#f97316" },
+                { val: 4, color: "#3b82f6" }
             ]
         },
         {
             id: 3,
             name: "Med Team 6",
             icon: Activity,
+            priorityLabel: "Urgent 1",
+            priorityColor: "#ef4444", // Red
             status: "AVAILABLE",
-            statusColor: "text-green-400 bg-green-400/10 border-green-400/20",
-            priority: "Urgent 1",
-            time: "Available",
-            location: "Sector 6",
-            distance: "0.4 km",
-            borderLeft: "border-l-4 border-l-blue-500",
-            stats: null // No stats shown in screenshot or implied full
+            statusBadgeColor: "#10b981", // Green
+            borderColor: "#3b82f6", // Blue border
+            iconBg: "rgba(59, 130, 246, 0.1)",
+            iconColor: "#3b82f6",
+            coords: [51.515, -0.08], // Mock Coords
+            stats: { time: "Available", sector: "Sector 6", dist: "0.4 km" },
+            bars: [
+                { val: 95, color: "#10b981" },
+                { val: 80, color: "#10b981" },
+                { val: 50, color: "#3b82f6" }
+            ]
         }
     ];
 
-    const supplies = [
-        { name: "Medical Kits", sub: "60 Units Available", count: "50 UNITS", icon: Box },
-        { name: "Antidote Packs", sub: "58 Units Available", count: "18 UNITS", icon: Database } // Database as generic container icon
-    ];
-
     return (
-        <div className="p-6 md:p-8 space-y-6 font-['Rajdhani'] text-white">
-
+        <div className="resources-page-container">
             {/* Header */}
-            <div>
-                <h1 className="text-2xl font-bold mb-1 uppercase tracking-wider">RESOURCE VIEW</h1>
-                {/* System status passed via layout, but we can add local header elements if needed */}
-            </div>
+            <header className="res-header">
+                <h1 className="res-title">RESOURCE VIEW</h1>
 
-            {/* Main Content Box */}
-            <div className="bg-[#1e293b]/40 backdrop-blur-md border border-white/5 rounded-2xl p-6 min-h-[600px]">
-
-                {/* Toolbar */}
-                <div className="flex flex-wrap justify-between items-center mb-8 gap-4">
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => setActiveTab('responders')}
-                            className={`px-6 py-2 rounded-lg font-bold text-sm tracking-wide transition-all ${activeTab === 'responders'
-                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
-                                    : 'text-gray-400 hover:text-white border border-transparent hover:border-gray-700'
-                                }`}
-                        >
-                            RESPONDERS
-                        </button>
-                        <button
-                            onClick={() => setActiveTab('vehicles')}
-                            className={`px-6 py-2 rounded-lg font-bold text-sm tracking-wide transition-all flex items-center gap-2 ${activeTab === 'vehicles'
-                                    ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/40'
-                                    : 'text-gray-400 hover:text-white border border-transparent hover:border-gray-700'
-                                }`}
-                        >
-                            <Truck size={16} /> VEHICLES
-                        </button>
-                        <button className="text-gray-500 hover:text-white transition">
-                            <Settings size={20} />
-                        </button>
-                    </div>
-
-                    <div className="flex items-center gap-2 cursor-pointer group">
-                        <span className="text-gray-400 text-sm font-bold uppercase">Active Responders</span>
-                        <span className="text-2xl font-bold text-white group-hover:text-blue-400 transition">{activeRespondersCount}</span>
-                        <ChevronDown size={16} className="text-gray-500" />
+                <div className="res-tabs">
+                    <button
+                        className={`res-tab ${activeTab === 'RESPONDERS' ? 'active' : 'inactive'}`}
+                        onClick={() => setActiveTab('RESPONDERS')}
+                    >
+                        RESPONDERS
+                    </button>
+                    <button
+                        className={`res-tab ${activeTab === 'VEHICLES' ? 'active' : 'inactive'}`}
+                        onClick={() => setActiveTab('VEHICLES')}
+                    >
+                        VEHICLES
+                    </button>
+                    <div className="p-2 text-gray-400 cursor-pointer hover:text-white">
+                        <Settings size={20} />
                     </div>
                 </div>
 
-                <div className="grid grid-cols-12 gap-6">
+                <div className="font-bold text-white tracking-wider">
+                    ACTIVE RESPONDERS: <span className="text-cyan-400 text-xl">24</span>
+                </div>
+            </header>
 
-                    {/* Responders List (Left Side - 8 cols) */}
-                    <div className="col-span-12 lg:col-span-8 space-y-4">
-                        <h3 className="text-xs font-bold text-gray-500 uppercase mb-2">Responder Teams</h3>
+            {/* Main Content Grid */}
+            <div className="res-main-content">
 
-                        {responderTeams.map((team) => (
-                            <div key={team.id} className={`bg-[#0f172a]/60 border border-white/5 rounded-xl p-4 flex flex-col md:flex-row gap-6 relative overflow-hidden group hover:border-white/10 transition ${team.borderLeft}`}>
-                                {/* Background gradient hint */}
-                                <div className="absolute top-0 right-0 w-64 h-full bg-gradient-to-l from-blue-900/5 to-transparent pointer-events-none" />
+                {/* Left Panel: Responders List */}
+                <div className="left-panel">
+                    <div className="left-panel-header">RESPONDER TEAMS</div>
 
-                                {/* Team Info */}
-                                <div className="flex-1 min-w-[200px]">
-                                    <div className="flex items-start justify-between mb-2">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-lg bg-gray-800/50 flex items-center justify-center text-orange-500">
-                                                <team.icon size={20} />
-                                            </div>
-                                            <div>
-                                                <h4 className="font-bold text-lg leading-tight">{team.name}</h4>
-                                                <div className="text-xs text-blue-400 font-bold">{team.priority}</div>
-                                            </div>
-                                        </div>
-                                        <div className={`px-2 py-1 rounded text-[10px] font-bold border uppercase ${team.statusColor}`}>
-                                            {team.status}
-                                        </div>
+                    <div className="team-cards-list">
+                        {teams.map(team => (
+                            <div
+                                key={team.id}
+                                className="team-card"
+                                style={{ borderLeft: `4px solid ${team.borderColor || team.priorityColor}` }}
+                            >
+                                <div className="team-main-content flex-1 flex gap-4 items-center">
+                                    <div className="team-card-icon" style={{ color: team.iconColor || team.priorityColor, background: team.iconBg }}>
+                                        <team.icon size={24} />
                                     </div>
 
-                                    <div className="flex items-center gap-4 text-xs text-gray-400 mt-4">
-                                        <div className="flex items-center gap-1.5">
-                                            <Clock size={12} className="text-gray-500" /> {team.time}
+                                    <div className="team-details">
+                                        <div className="flex items-center gap-3 mb-1">
+                                            <div className="team-name text-lg font-bold">{team.name}</div>
+                                            <div
+                                                className="team-status-badge text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider"
+                                                style={{ background: team.statusBadgeColor, color: team.status === 'AVAILABLE' ? '#000' : '#fff' }}
+                                            >
+                                                {team.status}
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-1.5">
-                                            <Activity size={12} className="text-gray-500" /> {team.location}
-                                        </div>
-                                        <div className="flex items-center gap-1.5">
-                                            <MapPin size={12} className="text-gray-500" /> {team.distance}
+                                        <div className="team-priority text-sm font-semibold mb-2" style={{ color: team.priorityColor }}>{team.priorityLabel}</div>
+
+                                        <div className="team-stats-row flex gap-4 text-xs text-gray-400">
+                                            <div className="stat-item flex items-center gap-1"><Clock size={12} /> {team.stats.time}</div>
+                                            <div className="stat-item flex items-center gap-1"><MapIcon size={12} /> {team.stats.sector}</div>
+                                            <div className="stat-item flex items-center gap-1"><MapPin size={12} /> {team.stats.dist}</div>
                                         </div>
                                     </div>
                                 </div>
 
-                                {/* Stats/Progress (Right side of card) */}
-                                {team.stats && (
-                                    <div className="w-full md:w-48 flex flex-col justify-center gap-3 border-t md:border-t-0 md:border-l border-white/5 pt-4 md:pt-0 md:pl-6">
-                                        {team.stats.map((stat, idx) => (
-                                            <div key={idx} className="flex items-center gap-3">
-                                                <div className="flex-1 h-1.5 bg-gray-700/50 rounded-full overflow-hidden">
-                                                    <div className={`h-full rounded-full ${stat.color}`} style={{ width: `${stat.value}%` }} />
-                                                </div>
-                                                <span className="text-xs font-bold text-gray-300 w-8 text-right">{stat.value}%</span>
+                                {/* Progress Bars Section - Moved to right side */}
+                                <div className="progress-section w-48 flex flex-col justify-center gap-2 pl-6 border-l border-white/5">
+                                    {team.bars.map((bar, i) => (
+                                        <div key={i} className="progress-row flex items-center gap-3">
+                                            <div className="progress-bar-bg flex-1 h-1.5 bg-gray-700/30 rounded-full overflow-hidden">
+                                                <div className="progress-fill h-full rounded-full" style={{ width: `${bar.val}%`, background: bar.color }}></div>
                                             </div>
-                                        ))}
-                                    </div>
-                                )}
+                                            <span className="progress-label text-xs font-bold text-gray-400 w-8 text-right">{bar.val}%</span>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         ))}
                     </div>
 
-                    {/* Report/Supply Panel (Right Side - 4 cols) */}
-                    <div className="col-span-12 lg:col-span-4 flex flex-col gap-6">
+                    {/* Footer Stats - Visual Only since layout fixed it at bottom */}
+                    <div className="mt-8 p-4 bg-white/5 rounded-lg flex justify-between text-sm text-gray-400">
+                        <span>Active Tasks: <span className="text-white font-bold">4</span></span>
+                        <span>Completed: <span className="text-green-400 font-bold">28</span></span>
+                        <span>Distance: <span className="text-white font-bold">17.4 km</span></span>
+                    </div>
+                </div>
 
-                        {/* Supply Status */}
-                        <div className="bg-[#0f172a]/40 border border-white/5 rounded-xl p-5">
-                            <h3 className="text-xs font-bold text-gray-500 uppercase mb-4">Supply Status</h3>
+                {/* Right Panel: Supply & Map */}
+                <div className="right-panel">
+                    <div className="right-panel-header" style={{ marginTop: 0 }}>SUPPLY STATUS</div>
 
-                            <div className="space-y-3">
-                                {supplies.map((supply, idx) => (
-                                    <div key={idx} className="bg-[#1e293b]/40 rounded-lg p-3 flex items-center justify-between border border-white/5">
-                                        <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-400">
-                                                <supply.icon size={20} />
-                                            </div>
-                                            <div>
-                                                <div className="font-bold text-sm">{supply.name}</div>
-                                                <div className="text-[10px] text-gray-400">{supply.sub}</div>
-                                            </div>
-                                        </div>
-                                        <div className="bg-blue-900/30 text-blue-300 px-2 py-1 rounded text-xs font-bold border border-blue-500/20">
-                                            {supply.count}
-                                        </div>
-                                    </div>
-                                ))}
+                    <div className="supply-grid">
+                        <div className="supply-card">
+                            <div className="flex gap-3 items-center">
+                                <div className="p-2 bg-blue-500/20 rounded-lg text-blue-400">
+                                    <Box size={24} />
+                                </div>
+                                <div className="supply-info">
+                                    <h4>Medical Kits</h4>
+                                    <p>60 Units Available</p>
+                                </div>
                             </div>
+                            <div className="supply-count">50 UNITS</div>
                         </div>
 
-                        {/* Map Preview or Additional Info placeholder based on screenshot dark area */}
-                        <div className="flex-1 bg-[#0f172a]/40 border border-white/5 rounded-xl p-5 min-h-[200px] flex items-center justify-center text-gray-600 font-bold text-sm uppercase tracking-widest">
-                            Sector Map View
+                        <div className="supply-card">
+                            <div className="flex gap-3 items-center">
+                                <div className="p-2 bg-blue-500/20 rounded-lg text-blue-400">
+                                    <Syringe size={24} />
+                                </div>
+                                <div className="supply-info">
+                                    <h4>Antidote Packs</h4>
+                                    <p>88 Units Available</p>
+                                </div>
+                            </div>
+                            <div className="supply-count">18 UNITS</div>
                         </div>
-
                     </div>
 
+                    <div className="right-panel-header">SECTOR MAP VIEW</div>
+                    <div className="sector-map-container">
+                        <MapContainer
+                            center={[51.51, -0.09]}
+                            zoom={13}
+                            zoomControl={false}
+                            style={{ height: '100%', width: '100%' }}
+                        >
+                            <TileLayer
+                                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                                attribution='&copy; CARTO'
+                            />
+                            {teams.map(team => (
+                                <Marker
+                                    key={team.id}
+                                    position={team.coords}
+                                    icon={getCustomIcon(team.borderColor || team.priorityColor)}
+                                >
+                                    <Popup className="custom-popup-dark">
+                                        <div className="p-1">
+                                            <strong style={{ color: team.priorityColor }}>{team.name}</strong><br />
+                                            {team.status}
+                                        </div>
+                                    </Popup>
+                                </Marker>
+                            ))}
+                        </MapContainer>
+
+                        {/* Overlay scan effect */}
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/10 to-transparent h-full w-full animate-scan pointer-events-none z-[1000]"></div>
+                    </div>
                 </div>
 
             </div>
+
+
         </div>
     );
 };

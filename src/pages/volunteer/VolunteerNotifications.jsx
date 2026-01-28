@@ -1,116 +1,204 @@
 import React, { useState } from 'react';
 import {
     Bell, Siren, RefreshCw, AlertTriangle, MessageSquare,
-    Check, X, ChevronRight
+    Check, X, ChevronRight, Inbox
 } from 'lucide-react';
-import './VolunteerDashboard.css';
+import './VolunteerNotifications.css';
 
 const VolunteerNotifications = () => {
-    // Mock Data
-    const [alerts, setAlerts] = useState([
-        { id: 1, type: 'urgent', title: 'URGENT: CRITICAL MEDICAL EMERGENCY', desc: 'Sector 4 requires immediate support. Multiple casualties report.', time: '2 min ago', read: false },
-        { id: 2, type: 'reassign', title: 'Task Reassigned', desc: 'Your supply run in Sector 6 has been transferred to Team Bravo.', time: '15 min ago', read: false },
-        { id: 3, type: 'safety', title: 'Hazard Warning: Sector 9', desc: 'Chemical leak detected. Avoid the industrial zone until further notice.', time: '45 min ago', read: true },
-        { id: 4, type: 'message', title: 'New Message from Coordinator', desc: 'Great work on the evacuation task! Return to base for resupply.', time: '1 hour ago', read: true },
+    // Mock Data - Matching User Request Examples
+    const [notifications, setNotifications] = useState([
+        {
+            id: 1,
+            type: 'URGENT', // urgent-red
+            title: 'URGENT: CRITICAL MEDICAL EMERGENCY',
+            desc: 'Sector 4 requires immediate support. Multiple casualties report. Medics en route, immediate assistance needed for triage.',
+            time: '2 min ago',
+            read: false
+        },
+        {
+            id: 2,
+            type: 'TASK', // task-yellow
+            title: 'Task Reassigned',
+            desc: 'Your supply run in Sector 6 has been transferred to Team Bravo. Proceed to new waypoints for Sector 8.',
+            time: '13 min ago',
+            read: false
+        },
+        {
+            id: 3,
+            type: 'WARNING', // warning-orange
+            title: 'Hazard Warning: Sector 9',
+            desc: 'Chemical leak detected. Avoid the industrial zone until further notice. Hazmat teams active in the area.',
+            time: '43 min ago',
+            read: true
+        },
+        {
+            id: 4,
+            type: 'MESSAGE', // message-cyan/blue
+            title: 'New Message from Coordinator',
+            desc: 'Great work on the evacuation task! Return to base for resupply once current sector is clear. Keep it up.',
+            time: '1 hour ago',
+            read: true
+        },
     ]);
 
+    const [filter, setFilter] = useState('ALL'); // ALL, URGENT, INFO (Task, Warning), MESSAGES
+
+    // Filter Logic
+    const filteredNotifications = notifications.filter(notif => {
+        if (filter === 'ALL') return true;
+        if (filter === 'URGENT') return notif.type === 'URGENT';
+        if (filter === 'INFO') return notif.type === 'TASK' || notif.type === 'WARNING';
+        if (filter === 'MESSAGES') return notif.type === 'MESSAGE';
+        return true;
+    });
+
     const markAllRead = () => {
-        setAlerts(alerts.map(a => ({ ...a, read: true })));
+        setNotifications(notifications.map(n => ({ ...n, read: true })));
     };
 
-    const deleteAlert = (id) => {
-        setAlerts(alerts.filter(a => a.id !== id));
+    const deleteNotification = (id) => {
+        setNotifications(notifications.filter(n => n.id !== id));
     };
 
     return (
-        <div className="p-6 md:p-8 max-w-4xl mx-auto animate-slide-up">
-            <div className="flex justify-between items-center mb-6">
-                <div>
-                    <h1 className="text-2xl font-bold text-white font-['Share_Tech_Mono'] mb-1 flex items-center gap-3">
-                        <Bell className="text-cyan-400" /> NOTIFICATION CENTER
-                    </h1>
+        <div className="notifications-page-container">
+            {/* Header */}
+            <header className="notifications-header">
+                <div className="header-title-group">
+                    <Bell size={28} className="text-[#00ffff]" />
+                    <h1 className="page-title">NOTIFICATION CENTER</h1>
                 </div>
-                <button
-                    onClick={markAllRead}
-                    className="text-xs text-cyan-400 hover:text-white transition font-bold uppercase tracking-wider"
-                >
-                    Mark All Read
-                </button>
-            </div>
 
-            <div className="space-y-4">
-                {alerts.map(alert => (
-                    <AlertItem
-                        key={alert.id}
-                        alert={alert}
-                        onDelete={() => deleteAlert(alert.id)}
-                    />
-                ))}
-
-                {alerts.length === 0 && (
-                    <div className="text-center py-12 text-gray-500">
-                        <Bell size={48} className="mx-auto mb-4 opacity-20" />
-                        <p>No new notifications.</p>
+                <div className="header-actions">
+                    <div className="filter-tabs">
+                        {['ALL', 'URGENT', 'INFO', 'MESSAGES'].map((tab) => (
+                            <button
+                                key={tab}
+                                className={`filter-tab ${filter === tab ? 'active' : ''}`}
+                                onClick={() => setFilter(tab)}
+                            >
+                                {tab}
+                            </button>
+                        ))}
                     </div>
+                    <button className="mark-read-btn" onClick={markAllRead}>
+                        Mark All Read
+                    </button>
+                </div>
+            </header>
+
+            {/* Notification List */}
+            <div className="notification-list">
+                {filteredNotifications.length > 0 ? (
+                    filteredNotifications.map(notif => (
+                        <NotificationCard
+                            key={notif.id}
+                            data={notif}
+                            onDismiss={() => deleteNotification(notif.id)}
+                        />
+                    ))
+                ) : (
+                    <EmptyState />
                 )}
             </div>
         </div>
     );
 };
 
-const AlertItem = ({ alert, onDelete }) => {
-    const getTypeStyles = (type) => {
+const NotificationCard = ({ data, onDismiss }) => {
+    // Determine styles based on type
+    const getCardStyles = (type) => {
         switch (type) {
-            case 'urgent': return { icon: Siren, color: 'text-red-500', border: 'border-red-500', bg: 'bg-red-900/10' };
-            case 'reassign': return { icon: RefreshCw, color: 'text-yellow-400', border: 'border-yellow-500', bg: 'bg-yellow-900/10' };
-            case 'safety': return { icon: AlertTriangle, color: 'text-orange-500', border: 'border-orange-500', bg: 'bg-orange-900/10' };
-            case 'message': return { icon: MessageSquare, color: 'text-blue-400', border: 'border-blue-500', bg: 'bg-blue-900/10' };
-            default: return { icon: Bell, color: 'text-gray-400', border: 'border-gray-600', bg: 'bg-gray-800' };
+            case 'URGENT':
+                return {
+                    className: 'card-urgent',
+                    Icon: Siren,
+                    titleColor: '#DC143C'
+                };
+            case 'TASK':
+                return {
+                    className: 'card-task',
+                    Icon: RefreshCw,
+                    titleColor: '#FFA500'
+                };
+            case 'WARNING':
+                return {
+                    className: 'card-warning',
+                    Icon: AlertTriangle,
+                    titleColor: '#FF6B35'
+                };
+            case 'MESSAGE':
+                return {
+                    className: 'card-message',
+                    Icon: MessageSquare,
+                    titleColor: '#00ffff'
+                };
+            default:
+                return {
+                    className: '',
+                    Icon: Bell,
+                    titleColor: '#fff'
+                };
         }
     };
 
-    const style = getTypeStyles(alert.type);
-    const Icon = style.icon;
+    const styles = getCardStyles(data.type);
+    const IconComponent = styles.Icon;
 
     return (
-        <div className={`relative p-4 rounded-xl border ${alert.read ? 'border-gray-800 bg-[rgba(15,23,42,0.4)]' : `${style.border} ${style.bg}`} transition hover:translate-x-1`}>
-            {!alert.read && <div className={`absolute top-4 right-4 w-2 h-2 rounded-full ${style.color.replace('text', 'bg')} animate-pulse`}></div>}
+        <div className={`notification-card ${styles.className}`}>
+            {/* Icon Section */}
+            <div className="card-icon">
+                <IconComponent size={24} />
+            </div>
 
-            <div className="flex gap-4">
-                <div className={`p-3 rounded-lg bg-black/20 h-fit ${style.color}`}>
-                    <Icon size={24} />
+            {/* Content Section */}
+            <div className="card-content">
+                <div className="card-header">
+                    <h3 className="card-title" style={{ color: styles.titleColor }}>
+                        {data.title}
+                    </h3>
+                    <span className="card-timestamp">{data.time}</span>
                 </div>
 
-                <div className="flex-1">
-                    <div className="flex justify-between items-start pr-6">
-                        <h3 className={`font-bold ${alert.read ? 'text-gray-300' : 'text-white'}`}>{alert.title}</h3>
-                        <span className="text-xs font-mono text-gray-500 whitespace-nowrap ml-2">{alert.time}</span>
-                    </div>
-                    <p className="text-sm text-gray-400 mt-1 leading-relaxed">{alert.desc}</p>
+                <p className="card-description">
+                    {data.desc}
+                </p>
 
-                    {/* Actions */}
-                    <div className="flex gap-3 mt-4">
-                        {alert.type === 'urgent' && (
-                            <button className="px-4 py-1.5 bg-red-600 hover:bg-red-500 text-white text-xs font-bold rounded shadow-lg shadow-red-900/20 transition">
-                                VIEW & ACCEPT
-                            </button>
-                        )}
-                        {alert.type === 'message' && (
-                            <button className="px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded transition">
-                                REPLY
-                            </button>
-                        )}
-                        <button
-                            onClick={onDelete}
-                            className="px-3 py-1.5 border border-gray-700 hover:bg-gray-800 text-gray-400 text-xs font-bold rounded transition ml-auto"
-                        >
-                            DISMISS
+                {/* Actions */}
+                <div className="card-actions">
+                    {data.type === 'URGENT' && (
+                        <button className="btn-action btn-primary-urgent">
+                            View & Accept
                         </button>
-                    </div>
+                    )}
+
+                    {data.type === 'MESSAGE' && (
+                        <button className="btn-action btn-primary-message">
+                            Reply
+                        </button>
+                    )}
+
+                    <button className="btn-action btn-dismiss" onClick={onDismiss}>
+                        Dismiss
+                    </button>
                 </div>
             </div>
         </div>
     );
 };
+
+const EmptyState = () => (
+    <div className="empty-state">
+        <div className="flex justify-center mb-4">
+            <div className="p-4 bg-gray-800 rounded-full border border-gray-700">
+                <Inbox size={48} className="text-gray-500" />
+            </div>
+        </div>
+        <h3>No New Notifications</h3>
+        <p>You're all caught up! Check back later for updates.</p>
+    </div>
+);
 
 export default VolunteerNotifications;

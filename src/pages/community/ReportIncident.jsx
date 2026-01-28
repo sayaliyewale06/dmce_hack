@@ -1,10 +1,37 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Camera, MapPin, CheckCircle, Cpu, Building2, Upload, AlertTriangle } from 'lucide-react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import './ReportIncident.css';
+
+// Fix Default Leaflet Icons
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+
+let DefaultIcon = L.icon({
+    iconUrl: icon,
+    shadowUrl: iconShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41]
+});
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const ReportIncident = () => {
     const navigate = useNavigate();
+
+    // Map Center (Jersey City Area)
+    const CENTER = [40.7282, -74.0776];
+
+    // Simulated Locations with Real Coordinates
+    const locations = [
+        { name: 'Central Plaza', coords: [40.7282, -74.0776] },
+        { name: 'Sector 7 Industrial', coords: [40.7350, -74.0600] },
+        { name: 'North Residential', coords: [40.7400, -74.0800] },
+        { name: 'East Power Grid', coords: [40.7200, -74.0500] },
+        { name: 'West Harbor', coords: [40.7150, -74.0900] },
+    ];
 
     // State
     const [formData, setFormData] = useState({
@@ -18,19 +45,27 @@ const ReportIncident = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [toast, setToast] = useState(null);
 
+    // Custom Icon Setup
+    const createCustomIcon = (active) => {
+        return L.divIcon({
+            html: `<div style="
+                background: ${active ? '#f472b6' : '#60a5fa'};
+                width: 16px; height: 16px;
+                border-radius: 50%;
+                border: 2px solid white;
+                box-shadow: 0 0 10px ${active ? '#f472b6' : '#60a5fa'};
+                animation: ${active ? 'pulse 1s infinite' : 'none'};
+            "></div>`,
+            className: 'custom-map-icon',
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+    };
+
     const showToast = (message, type = 'success') => {
         setToast({ message, type });
         setTimeout(() => setToast(null), 3000);
     };
-
-    // Simulated Locations with Coordinates (Top%, Left%) for the map
-    const locations = [
-        { name: 'Central Plaza', top: 50, left: 50 },
-        { name: 'Sector 7 Industrial', top: 30, left: 70 },
-        { name: 'North residential', top: 20, left: 40 },
-        { name: 'East Power Grid', top: 60, left: 80 },
-        { name: 'West Harbor', top: 70, left: 20 },
-    ];
 
     // Handler for form changes
     const handleChange = (e) => {
@@ -43,9 +78,23 @@ const ReportIncident = () => {
         setFormData(prev => ({ ...prev, severity: level }));
     };
 
-    // Handler for Map Pin Click
-    const handleMapPinClick = (locName) => {
+    // Handler for Map Marker Click
+    const handleMarkerClick = (locName) => {
         setFormData(prev => ({ ...prev, location: locName }));
+    };
+
+    // Component to handle map view updates
+    const MapController = ({ selectedLoc }) => {
+        const map = useMap();
+        React.useEffect(() => {
+            if (selectedLoc) {
+                const loc = locations.find(l => l.name === selectedLoc);
+                if (loc) {
+                    map.flyTo(loc.coords, 14);
+                }
+            }
+        }, [selectedLoc, map]);
+        return null;
     };
 
     // Submit Handler
@@ -209,30 +258,38 @@ const ReportIncident = () => {
 
                     {/* Right Column: Interactive Map */}
                     <div className="right-col map-section-col">
-                        <section className="glass-panel video-map-container" style={{ padding: 0, height: '100%' }}>
-                            {/* Map Container */}
-                            <div className="map-container">
-                                <div className="iso-city-grid"></div>
-                                {/* Simulated 3D Elements */}
+                        <section className="glass-panel video-map-container" style={{ padding: 0, height: '100%', minHeight: '600px', overflow: 'hidden' }}>
+                            <MapContainer
+                                center={CENTER}
+                                zoom={12}
+                                style={{ height: '100%', width: '100%' }}
+                                zoomControl={false}
+                            >
+                                <TileLayer
+                                    url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                                    attribution='&copy; CARTO'
+                                />
 
-                                {/* Interactive Pins */}
-                                {locations.map((loc, idx) => (
-                                    <div
-                                        key={idx}
-                                        className={`map-marker ${formData.location === loc.name ? 'active' : ''}`}
-                                        style={{ top: `${loc.top}%`, left: `${loc.left}%` }}
-                                        onClick={() => handleMapPinClick(loc.name)}
-                                        title={loc.name}
+                                <MapController selectedLoc={formData.location} />
+
+                                {locations.map(loc => (
+                                    <Marker
+                                        key={loc.name}
+                                        position={loc.coords}
+                                        icon={createCustomIcon(formData.location === loc.name)}
+                                        eventHandlers={{
+                                            click: () => handleMarkerClick(loc.name),
+                                        }}
                                     >
-                                        <div className="pin-ripple"></div>
-                                        <div className="pin-core"></div>
-                                    </div>
+                                        <Popup className="custom-popup-dark">
+                                            <div className="p-2 text-center">
+                                                <div className="font-bold text-cyan-400">{loc.name}</div>
+                                                <div className="text-xs text-white">Click to Select</div>
+                                            </div>
+                                        </Popup>
+                                    </Marker>
                                 ))}
-
-                                <div className="map-overlay-text">
-                                    INTERACTIVE CITY GRID: SELECT LOCATION
-                                </div>
-                            </div>
+                            </MapContainer>
                         </section>
                     </div>
                 </div>

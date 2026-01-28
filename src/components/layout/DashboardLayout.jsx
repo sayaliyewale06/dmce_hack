@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Map, Users, BarChart2, ShieldAlert, Bell, LogOut, ChevronRight, AlertTriangle, User } from 'lucide-react';
 import '../../styles/dashboard.css';
+import bgLightning from '../../assets/bg-lightning.png';
 
 const DashboardLayout = () => {
     const navigate = useNavigate();
@@ -14,7 +15,12 @@ const DashboardLayout = () => {
     };
 
     return (
-        <div className="dashboard-container" style={{ display: 'flex', minHeight: '100vh', background: '#0f1419', fontFamily: "'Rajdhani', sans-serif" }}>
+        <div className="dashboard-container" style={{
+            display: 'flex',
+            minHeight: '100vh',
+            background: `url(${bgLightning}) center/cover no-repeat fixed`,
+            fontFamily: "'Rajdhani', sans-serif"
+        }}>
             {/* Sidebar */}
             <aside className="sidebar" style={{ width: '260px', background: 'rgba(15, 20, 25, 0.95)', borderRight: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', position: 'fixed', height: '100vh', zIndex: 100, backdropFilter: 'blur(10px)' }}>
                 <div className="sidebar-header" style={{ height: '70px', display: 'flex', alignItems: 'center', padding: '0 1.5rem', gap: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>

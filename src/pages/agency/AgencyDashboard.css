@@ -53,7 +53,8 @@ body {
 /* Layout Structure */
 .agency-container {
     min-height: 100vh;
-    background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%);
+    /* background: linear-gradient(135deg, #0f1419 0%, #1a1f2e 100%); */
+    background: url(../../assets/bg-lightning.png) center/cover no-repeat fixed;
     display: flex;
 }
 

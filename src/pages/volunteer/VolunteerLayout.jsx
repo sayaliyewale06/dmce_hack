@@ -17,7 +17,7 @@ const VolunteerLayout = () => {
         { path: '/volunteer/map', label: 'Live Map', icon: Map },
         { path: '/volunteer/resources', label: 'Resource View', icon: Box },
         { path: '/volunteer/notifications', label: 'Alerts', icon: Bell },
-        { path: '/volunteer/analytics', label: 'Performance', icon: BarChart2 },
+        { path: '/volunteer/performance', label: 'Performance', icon: BarChart2 },
         { path: '/volunteer/profile', label: 'Profile', icon: User },
     ];
 
@@ -33,10 +33,7 @@ const VolunteerLayout = () => {
                 />
             )}
 
-            {/* Global SOS Button */}
-            <button className="fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full bg-red-600 text-white font-bold flex flex-col items-center justify-center shadow-[0_0_20px_rgba(220,38,38,0.6)] animate-pulse hover:scale-105 transition border-4 border-red-800/50">
-                <span className="text-xl">SOS</span>
-            </button>
+
 
             {/* Sidebar */}
             <aside className={`vol-sidebar ${sidebarOpen ? 'open' : ''}`}>

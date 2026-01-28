@@ -6,7 +6,16 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 import './CommunityHome.css';
+
+// Fix Leaflet Icons
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+let DefaultIcon = L.icon({ iconUrl: icon, shadowUrl: iconShadow, iconSize: [25, 41], iconAnchor: [12, 41] });
+L.Marker.prototype.options.icon = DefaultIcon;
 
 const CommunityHome = () => {
     const navigate = useNavigate();
@@ -214,19 +223,32 @@ const CommunityHome = () => {
                 <div className="right-col" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
 
                     {/* 4. Crisis Map Widget */}
-                    <div className="crisis-map-widget">
-                        <div className="map-placeholder"></div>
+                    <div className="crisis-map-widget" style={{ height: '300px', position: 'relative', overflow: 'hidden', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <MapContainer
+                            center={[19.1590, 72.9986]}
+                            zoom={13}
+                            style={{ height: "100%", width: "100%" }}
+                            zoomControl={false}
+                            dragging={false}
+                            scrollWheelZoom={false}
+                            doubleClickZoom={false}
+                            attributionControl={false}
+                        >
+                            <TileLayer
+                                url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                            />
+                            {/* Static-like pins for preview */}
+                            <Marker position={[19.1650, 73.0030]}></Marker>
+                            <Marker position={[19.1520, 72.9920]}></Marker>
+                        </MapContainer>
 
-                        {/* Static Pins */}
-                        <div className="map-pin-static" style={{ top: '40%', left: '30%', color: '#ef4444' }}></div>
-                        <div className="map-pin-static" style={{ top: '60%', left: '70%', color: '#ef4444' }}></div>
-                        <div className="map-pin-static" style={{ top: '50%', left: '50%', color: '#3b82f6', border: '2px solid white', width: '16px', height: '16px' }}></div> {/* User */}
-                        <div className="map-pin-static" style={{ top: '20%', left: '80%', color: '#10b981' }}></div>
-
-                        <div style={{ position: 'absolute', bottom: '10px', left: '10px', background: 'rgba(0,0,0,0.7)', padding: '5px 10px', borderRadius: '4px', fontSize: '0.7rem', color: '#94a3b8' }}>
+                        <div style={{ position: 'absolute', bottom: '10px', left: '10px', background: 'rgba(0,0,0,0.7)', padding: '5px 10px', borderRadius: '4px', fontSize: '0.7rem', color: '#94a3b8', zIndex: 1000 }}>
                             <span style={{ color: '#3b82f6', fontWeight: 'bold' }}>YOU</span> are in Sector 4 (Safe)
                         </div>
-                        <button style={{ position: 'absolute', top: '10px', right: '10px', background: 'rgba(0,0,0,0.5)', border: '1px solid #334155', color: '#fff', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer' }}>
+                        <button
+                            onClick={() => navigate('/dashboard/community/map')}
+                            style={{ position: 'absolute', top: '10px', right: '10px', zIndex: 1000, background: 'rgba(0,0,0,0.5)', border: '1px solid #334155', color: '#fff', padding: '4px 8px', borderRadius: '4px', fontSize: '0.7rem', cursor: 'pointer' }}
+                        >
                             Full Map
                         </button>
                     </div>

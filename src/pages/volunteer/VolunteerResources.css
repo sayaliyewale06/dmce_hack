@@ -1,0 +1,354 @@
+/* VolunteerResources.css */
+
+.resources-page-container {
+    width: 100%;
+    min-height: 100vh;
+    padding: 2rem;
+    padding-bottom: 6rem;
+    /* Space for footer/SOS */
+    font-family: 'Rajdhani', sans-serif;
+    color: #fff;
+    position: relative;
+}
+
+/* Background refinement (Handled globally or via layout, but extra override here if needed) */
+/* Assuming global background is set, we use panels for contrast */
+
+/* Header */
+.res-header {
+    background: rgba(10, 10, 10, 0.6);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.res-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    background: linear-gradient(90deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.res-tabs {
+    display: flex;
+    gap: 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 4px;
+    border-radius: 8px;
+}
+
+.res-tab {
+    padding: 0.5rem 1.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+}
+
+.res-tab.active {
+    background: rgba(65, 105, 225, 0.2);
+    color: #4169E1;
+    border: 1px solid rgba(65, 105, 225, 0.4);
+    box-shadow: 0 0 15px rgba(65, 105, 225, 0.2);
+}
+
+.res-tab.inactive {
+    color: #6b7280;
+}
+
+.res-tab.inactive:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Main Layout */
+.res-main-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+/* Left Panel */
+.left-panel-header {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.team-cards-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+/* Team Card - Updated Layout */
+.team-card {
+    background: linear-gradient(90deg, rgba(20, 20, 20, 0.9) 0%, rgba(30, 30, 30, 0.7) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    /* Split left and right content */
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.team-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.team-card-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.team-info {
+    flex: 1;
+}
+
+.team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.5rem;
+}
+
+.team-name {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.team-priority {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.team-status-badge {
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.team-stats-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Progress Section - now strictly sized */
+.progress-section {
+    flex-shrink: 0;
+}
+
+.progress-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.progress-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.8s ease-out;
+}
+
+.progress-label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    width: 30px;
+    text-align: right;
+    color: #94a3b8;
+}
+
+/* Right Panel */
+.right-panel-header {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+    /* Spacing for second section */
+}
+
+.right-panel-header:first-child {
+    margin-top: 0;
+}
+
+.supply-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.supply-card {
+    background: rgba(20, 20, 20, 0.6);
+    border: 1px solid rgba(65, 105, 225, 0.2);
+    border-radius: 8px;
+    padding: 1.2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.supply-card:hover {
+    background: rgba(65, 105, 225, 0.1);
+    border-color: rgba(65, 105, 225, 0.4);
+    transform: scale(1.02);
+}
+
+.supply-info h4 {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+}
+
+.supply-info p {
+    font-size: 0.8rem;
+    color: #94a3b8;
+}
+
+.supply-count {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #4169E1;
+}
+
+/* Map Placeholder */
+.sector-map-container {
+    background: #0f172a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    height: 300px;
+    /* Increased height for better view */
+    position: relative;
+    overflow: hidden;
+    /* Removed flex centering so Map can fill space */
+}
+
+.sector-map-container .leaflet-container {
+    height: 100%;
+    width: 100%;
+    background: transparent;
+}
+
+.map-placeholder-content {
+    text-align: center;
+    opacity: 0.7;
+}
+
+/* Footer Stats */
+.res-footer {
+    position: fixed;
+    bottom: 0;
+    left: 280px;
+    /* Sidebar width approx */
+    right: 0;
+    padding: 1rem 2rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    display: flex;
+    gap: 2rem;
+    pointer-events: none;
+    /* Let clicks pass through if needed, but text is selectable */
+}
+
+.footer-stat {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* SOS Button */
+.sos-float-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #DC143C;
+    border: 4px solid rgba(150, 0, 0, 0.5);
+    color: white;
+    font-weight: 800;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 20px rgba(220, 20, 60, 0.6);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 100;
+    animation: pulse-sos 2s infinite;
+}
+
+.sos-float-btn:hover {
+    transform: scale(1.1);
+    background: #ff1f4b;
+    box-shadow: 0 0 40px rgba(220, 20, 60, 0.8);
+}
+
+@keyframes pulse-sos {
+    0% {
+        box-shadow: 0 0 0 0 rgba(220, 20, 60, 0.7);
+    }
+
+    70% {
+        box-shadow: 0 0 0 20px rgba(220, 20, 60, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(220, 20, 60, 0);
+    }
+}
+
+@media (max-width: 1024px) {
+    .res-main-content {
+        grid-template-columns: 1fr;
+    }
+
+    .res-footer {
+        left: 0;
+    }
+}
